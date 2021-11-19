@@ -1,0 +1,70 @@
+public class Hotel {
+    private String hotelName;
+    private Room[] rooms;
+    private int totalRooms;
+
+    public Hotel(String hotelName, int totalRooms, int numberOfFloors) {
+        this.hotelName = hotelName;
+        this.totalRooms = totalRooms;
+        rooms = new Room[totalRooms];
+        int roomsPerFloor = totalRooms / numberOfFloors;
+        int count = 0;
+        for (int i = 0; i <= roomsPerFloor; i++) {
+            if (i == roomsPerFloor - 1) {
+                rooms[count] = new Room((numberOfFloors * 100) + i, "suite");
+                count++;
+            } else if (((i < roomsPerFloor - 1) && (i >= (roomsPerFloor - 5)))) {
+                rooms[count] = new Room((numberOfFloors * 100) + i, "single king");
+                count++;
+            } else {
+                rooms[count] = new Room((numberOfFloors * 100) + i, "double queen");
+                count++;
+            }
+        }
+    }
+
+    public int getTotalRooms() {
+        return totalRooms;
+    }
+
+    public int getNumberOccupied() {
+        int count = 0;
+        for (int i = 0; i < rooms.length; i++) {
+            if (!(rooms[i].occupantName.equals(""))) {
+                count++;
+            }
+
+        }
+        return count;
+    }
+
+    public double getOccupancyRate() {
+        int n = getNumberOccupied();
+        double occ = Math.round(((n / rooms.length) * 100) / 100);
+        return occ;
+    }
+
+    public boolean rentRoom(String roomType, String name, int days) {
+        for (int i = 0; i < totalRooms; i++) {
+            if ((rooms[i].getOccupantName() == "") && rooms[i].getRoomType() == roomType) {
+                rooms[i].setOccupantName(name, days);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void advanceDay() {
+        for (int i = 0; i < rooms.length; i++) {
+            rooms[i].advanceDay();
+        }
+    }
+
+    public String toString() {
+        return "The " + hotelName + getOccupancyRate();
+    }
+
+    public Room[] getRooms() {
+        return rooms;
+    }
+}
