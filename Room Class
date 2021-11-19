@@ -1,0 +1,61 @@
+public class Room {
+     int roomNumber;
+     int daysRented;
+     String roomType;
+     String occupantName;
+
+
+
+    public Room(int roomNumber, String roomType) {
+        this.roomNumber = roomNumber;
+        daysRented = 0;
+        occupantName = null;
+        if(roomType != "single king"|| roomType != "double queen" || roomType != "suite") {
+            roomType = "double queen";
+        }
+    }
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
+    public int getDaysRented() {
+        return daysRented;
+    }
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public String getOccupantName() {
+        return occupantName;
+    }
+
+    public boolean setOccupantName(String name, int numberOfDays) {
+        boolean wasSuccessful = true;
+        if(getDaysRented() > 0) {
+            wasSuccessful = false;
+        }
+        if(wasSuccessful) {
+            this.occupantName = name;
+            this.daysRented = numberOfDays;
+        }
+        return wasSuccessful;
+    }
+    public void advanceDay() {
+        daysRented -=1;
+        if(daysRented <=0) {
+            occupantName = null;
+            daysRented = 0;
+        }
+    }
+    public String toString() {
+        String returningString = "";
+        if(daysRented > 0) {
+            returningString = ("Room " + roomNumber + "-rented");
+        }
+        if(daysRented <=0) {
+            returningString = ("Room " + roomNumber + "-free");
+        }
+        return returningString;
+    }
+}
